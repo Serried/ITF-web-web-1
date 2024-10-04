@@ -1,0 +1,42 @@
+p {
+    font-size: 15px;
+}
+* {
+    margin:0px;
+}
+
+.navbar {
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    padding: 5px;
+    font-size: 30px;
+}
+
+.nav-item {
+    color: blueviolet;
+    background-color: aliceblue;
+    display: inline-block;
+    font-size: 30px;
+}
+.nav-item-container {
+    display:flex;
+    column-gap: 10px;
+    justify-content: right;
+}
+
+.nav-item-logo {
+    display: flex;
+    justify-content: left;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.moodeng {
+    display:flex;
+    justify-content: center;
+}
