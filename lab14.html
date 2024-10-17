@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lab14.css">
+    <title>ITF Lab 14</title>
+</head>
+<body>
+    <nav style="width: 100%; text-align:center; display: flex; justify-content:center; align-items: center; height: 10vh;">
+        <div class="header" style="display: flex; gap: 5px; font-family: 'SF Pro', 'Helvetica Neue', Arial, sans-serif; font-size: 3vh;">
+            <div class="name" id="name" style="font-family: 'SF Pro', 'Helvetica Neue', Arial, sans-serif;">nongrew</div>'s phone book
+        </div>
+    </nav>
+    <div class="container" style="width: 100%; text-align: center; align-items: center; justify-content: center; display: flex;">
+        <div class="profile" id="profile" style="background-image: url(https://wallpapers.com/images/featured/plain-black-background-02fh7564l8qq4m6d.jpg); width: 183px; height: 183px; position: relative; background-position: center; background-size: cover; border-radius: 50%;">
+            <div class="alert" style="position: absolute; background-color: red; padding: 1vh 1.5vh; border-radius: 50%; color: white; right: 0; bottom: 0;">
+                <p>1</p>
+            </div>
+        </div>
+    </div>
+    <div class="input-container" style="width: 100%; display: flex; flex-direction: column; padding: 2vh 0vh; gap: 30px; align-items: center; text-align: center; justify-content: center;">
+        <div class="card" style="display: flex; gap: 10px;">
+            <label for="" style="font-family: 'SF Pro', 'Helvetica Neue', Arial, sans-serif;" >Set username</label>
+            <input type="text" placeholder="Enter" id="input" style="border: none; padding: .5vh; border-radius: .5vh; background-color: rgb(218, 218, 218);"><button style="background-color: rgb(128, 128, 243); border: none; padding: 0.3vh 1vh; border-radius: .5vh;" onclick="setUsername()">SET</button>
+        </div>
+        <div class="card" style="display: flex; gap: 10px;">
+            <label for="" style="font-family: 'SF Pro', 'Helvetica Neue', Arial, sans-serif;">Set profile</label>
+            <input type="text" placeholder="Enter" id="profilelink" style="border: none; padding: .5vh; border-radius: .5vh; background-color: rgb(218, 218, 218);"><button style="background-color: rgb(128, 128, 243); border: none; padding: 0.3vh 1vh; border-radius: .5vh;" onclick="setImg()">SET</button>
+        </div>
+    </div>
+    <div class="phone-container" style="width: 100%; text-align: center;">
+        <div class="text-phone" style="font-family: 'SF Pro', 'Helvetica Neue', Arial, sans-serif; font-size: 2vh; font-weight: 700; margin-bottom: 1vh;">Phone Number List</div>
+        <div class="phone-input">
+            <input type="text" placeholder="Name" id="name-phone" style="border: none; padding: .5vh; border-radius: .5vh; background-color: rgb(218, 218, 218);">
+            <input type="text" placeholder="Tel" id="phone-num" style="border: none; padding: .5vh; border-radius: .5vh; background-color: rgb(218, 218, 218);">
+            <button style="background-color: rgb(128, 128, 243); border: none; padding: 0.3vh 1vh; border-radius: .5vh;" onclick="setElement()">ADD</button>
+            <button style="background-color: rgb(128, 128, 243); border: none; padding: 0.3vh 1vh; border-radius: .5vh;" onclick="saveCSV()">EXPORT</button>
+        </div>
+    </div>
+    <div class="table-container" style="display: flex; align-items: center; text-align: center; justify-content: center; padding: 2vh; font-family: 'SF Pro', 'Helvetica Neue', Arial, sans-serif;">
+        <table style="border-bottom: 2px solid black;text-align: left; width: 26%;">
+            <tr>
+              <th style="background-color: rgb(179, 179, 179); border-bottom: 2px solid black;">No</th>
+              <th style="background-color: rgb(179, 179, 179);border-bottom: 2px solid black;">Name</th>
+              <th style="background-color: rgb(179, 179, 179); border-bottom: 2px solid black;">Phone Number </th>
+            </tr>
+            <tr id="myList">
+              <td id="no"></td>
+              <td id="name-phoneeee"></td>
+              <td id="phonenumber"></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        const username = document.getElementById("name")
+        const i = document.getElementById("input")
+        const profile = document.getElementById("profile")
+        const link = document.getElementById("profilelink")
+        const namephonee = document.getElementById("name-phone")
+        const phonenum = document.getElementById("phone-num")
+        username.textContent = "nongrew";
+        function setUsername(){
+            console.log(i.value);
+            username.textContent = i.value;
+            i.value = "";
+        };
+        
+        function setImg(){
+            profile.style.backgroundImage = `url(${link.value})`;
+            link.value = "";
+        };
+
+        function setElement() {
+    const table = document.querySelector("table");
+    const newRow = document.createElement("tr");
+    const rowCount = table.getElementsByTagName("tr").length - 1;
+    const noCell = document.createElement("td");
+    const nameCell = document.createElement("td");
+    const phoneCell = document.createElement("td");
+    noCell.textContent = rowCount;
+    nameCell.textContent = namephonee.value;
+    phoneCell.textContent = phonenum.value;
+    newRow.appendChild(noCell);
+    newRow.appendChild(nameCell);
+    newRow.appendChild(phoneCell);
+    table.appendChild(newRow);
+    namephonee.value = "";
+    phonenum.value = "";
+}
+
+function saveCSV() {
+    const table = document.querySelector("table");
+    const rows = table.getElementsByTagName("tr");
+    let csvContent = "";
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        let rowContent = [];
+        for (let j = 0; j < cells.length; j++) {
+            rowContent.push(cells[j].textContent);
+        }
+        csvContent += rowContent.join(",") + "\n";
+    }
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "phonebook.csv");
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+    </script>
+</body>
+</html>
